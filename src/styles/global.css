@@ -1,7 +1,13 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-sans:
+    "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
@@ -32,4 +38,115 @@ body {
 }
 .custom-scrollbar::-webkit-scrollbar-thumb {
   @apply bg-gray-200 rounded-full;
+}
+
+@layer components {
+  /* 1. Intro Highlight Blocks */
+  .intro-box {
+    @apply bg-slate-50/80 rounded-lg p-6 mb-8 border border-slate-100;
+  }
+
+  /* 2. Left Accent Bars for Headers */
+  .section-header {
+    @apply text-xl font-bold text-gray-900 mb-6 pl-4 border-l-2 border-slate-400 flex items-center gap-3;
+  }
+
+  /* 3. Card Separation & Depth */
+  .card-refined {
+    @apply bg-white rounded-xl shadow-sm border border-slate-200 hover:shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:border-blue-200 hover:-translate-y-[1px] transition-all duration-300;
+  }
+
+  /* 4. Unified Accent Tone (Muted Slate) */
+  .accent-muted {
+    @apply text-slate-500 font-medium;
+  }
+}
+
+.alternate-sections > section:nth-child(even) {
+  @apply bg-slate-50/50 -mx-6 px-6 rounded-xl sm:-mx-8 sm:px-8 py-6 my-6 border-y border-slate-100/50;
+}
+
+/* 6. Vertical Timeline Accent (CSS Only) */
+.timeline-list {
+  @apply relative border-l-2 border-slate-200 ml-3 pl-6 space-y-8;
+}
+.timeline-item {
+  @apply relative;
+}
+.timeline-item::before {
+  content: "";
+  @apply absolute -left-[31px] top-2 w-3 h-3 rounded-full bg-white border-2 border-slate-300 transition-colors duration-300;
+}
+.timeline-item:hover::before {
+  @apply border-blue-500 bg-blue-50;
+}
+
+/* 7. Clickable Card Utility */
+.card-link {
+  @apply absolute inset-0 z-10;
+}
+/* Ensure inner buttons are clickable over the card link */
+.card-actions, .inner-link {
+  @apply relative z-20;
+}
+
+/* 8. Micro-interaction: Generic Copy Tooltip styles */
+.copy-btn {
+  @apply relative;
+}
+.copy-tooltip {
+  @apply absolute -top-8 left-1/2 -translate-x-1/2 bg-gray-900 text-white text-xs py-1 px-2 rounded opacity-0 transition-opacity duration-200 pointer-events-none;
+}
+.copy-btn.copied .copy-tooltip {
+  @apply opacity-100;
+}
+
+/* 9. Skeleton Loaders */
+.skeleton {
+  @apply bg-gray-200 animate-pulse rounded;
+}
+.skeleton-text {
+  @apply h-4 w-3/4 mb-2;
+}
+.skeleton-card {
+  @apply h-32 w-full rounded-xl bg-gray-100 animate-pulse;
+}
+
+/* 10. Back to Top Button */
+.back-to-top {
+  @apply fixed bottom-8 right-8 bg-white border border-gray-200 shadow-lg p-3 rounded-full text-gray-600 opacity-0 translate-y-4 transition-all duration-300 z-40 hover:text-blue-600 hover:border-blue-300 hover:shadow-xl cursor-pointer;
+}
+.back-to-top.visible {
+  @apply opacity-100 translate-y-0;
+}
+
+/* Scroll Spy Active State */
+.toc-link {
+  position: relative;
+  transition: all 0.2s ease-in-out;
+}
+
+.toc-link.toc-active {
+  font-weight: 700 !important;
+  color: #2563eb !important; /* blue-600 */
+  background-color: #eff6ff; /* blue-50 */
+  border-left-color: #2563eb !important; /* blue-600 */
+}
+
+/* Minimal indicator for left-border style links (Publications) */
+.toc-link.toc-active::before {
+  content: '';
+  position: absolute;
+  left: -2px; /* Adjust based on border width */
+  top: 50%;
+  transform: translateY(-50%);
+  height: 70%;
+  width: 3px;
+  background-color: #2563eb;
+  border-radius: 0 4px 4px 0;
+  display: block; 
+}
+/* Override display for non-border links if needed, but for now we apply generally */
+nav a.toc-active {
+   padding-left: 1rem; /* Ensure space for indicator/bg */
 }

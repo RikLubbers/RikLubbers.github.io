@@ -122,6 +122,17 @@ const softwares = defineCollection({
     number: z.string(), // Registration Number
     date: z.date(),
     description: z.string().optional(),
+    link: z.string().optional(), // Legacy single link
+    // New fields
+    type: z.string().optional(), // e.g. "Research Package", "Workflow"
+    stack: z.array(z.string()).optional(),
+    context: z.string().optional(), // One-line research context
+    links: z.object({
+      github: z.string().optional(),
+      docs: z.string().optional(),
+      demo: z.string().optional(),
+    }).optional(),
+    details: z.string().optional(), // Text for expandable section
   }),
 });
 
@@ -147,14 +158,100 @@ const activities = defineCollection({
   }),
 });
 
+const positions = defineCollection({
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/positions" }),
+  schema: z.object({
+    role: z.string(),
+    institution: z.string(),
+    location: z.string(),
+    startDate: z.date(),
+    endDate: z.date().optional(), // If missing, assume "present"
+    current: z.boolean().default(false),
+    description: z.array(z.string()).optional(), // Bullets
+  }),
+});
+
+const education = defineCollection({
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/education" }),
+  schema: z.object({
+    degree: z.string(),
+    institution: z.string(),
+    location: z.string(),
+    startDate: z.date(),
+    endDate: z.date(),
+  }),
+});
+
+const grants = defineCollection({
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/grants" }),
+  schema: z.object({
+    title: z.string(),
+    funder: z.string(),
+    amount: z.string(),
+    year: z.string(), // e.g. "2026", "2025-2026"
+    date: z.date(), // For sorting
+    role: z.string().optional(),
+    purpose: z.string().optional(),
+    category: z.enum(['Research', 'Impact', 'Travel']).default('Research'), // New filterable category
+    funderUrl: z.string().optional(), // New link field
+  }),
+});
+
+const visits = defineCollection({
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/visits" }),
+  schema: z.object({
+    institution: z.string(),
+    role: z.string(),
+    location: z.string(),
+    startDate: z.date(),
+    endDate: z.date(),
+  }),
+});
+
+const teaching = defineCollection({
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/teaching" }),
+  schema: z.object({
+    title: z.string(),
+    institution: z.string(),
+    role: z.string().optional(), // Guest lecture, etc
+    date: z.date(),
+    year: z.string(),
+    description: z.string().optional(),
+  }),
+});
+
+const training = defineCollection({
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/training" }),
+  schema: z.object({
+    title: z.string(),
+    institution: z.string(),
+    type: z.enum(['Methods', 'SummerSchool', 'Professional', 'Other']),
+    date: z.date(),
+    dateString: z.string().optional(), // "2023-2024" or "2-27 Mar 2025"
+  }),
+});
+
+const service = defineCollection({
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/service" }),
+  schema: z.object({
+    role: z.string(),
+    organization: z.string(),
+    startDate: z.date(),
+    endDate: z.date().optional(),
+    current: z.boolean().default(false),
+    description: z.string().optional(),
+    type: z.enum(['board', 'commission', 'committee', 'advisory']).default('committee'),
+  }),
+});
+
 export const collections = {
   publications,
-  books,
-  team,
-  news,
-  research,
-  patents,
   softwares,
-  honors,
-  activities,
+  positions,
+  education,
+  grants,
+  visits,
+  teaching,
+  training,
+  service,
 };

@@ -3,13 +3,15 @@ import '../styles/global.css';
 import Header from '../components/Header.astro';
 import { SITE } from '../config';
 import { ui, defaultLang } from '../i18n/ui';
+import { ClientRouter } from 'astro:transitions';
 
 interface Props {
   title?: string;
   description?: string;
+  footer?: boolean;
 }
 
-const { title, description = SITE.description } = Astro.props;
+const { title, description = SITE.description, footer = true } = Astro.props;
 const pageTitle = title ? `${title} | ${SITE.labName}` : `${SITE.labName} - ${SITE.university}`;
 
 // Define dynamic OG Image
@@ -32,6 +34,7 @@ const ogImage = new URL(`/og/${finalOgSlug}.png`, Astro.url);
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <ClientRouter />
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self';" />
     <meta name="description" content={description} />
     <meta name="viewport" content="width=device-width" />
@@ -79,16 +82,80 @@ const ogImage = new URL(`/og/${finalOgSlug}.png`, Astro.url);
       <slot />
     </main>
     
-    <footer class="border-t border-gray-100 py-8 mt-12 bg-gray-50">
-      <div class="max-w-7xl mx-auto px-4 text-center text-gray-500 text-sm">
-        <p>
-          <a href="https://github.com/fjd2004711/scholar-lite" target="_blank" class="hover:text-gray-700 inline-flex items-center gap-1 transition-colors">
-            Built with Scholar-Lite Open Source Template
-          </a>
-        </p>
+    <button id="back-to-top" class="back-to-top" aria-label="Back to Top">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><path d="m18 15-6-6-6 6"/></svg>
+    </button>
+
+
+
+    {footer && (
+    <footer class="border-t border-gray-100 py-12 mt-12 bg-gray-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+          <div class="text-center md:text-left">
+            <span class="font-bold text-gray-900 text-lg">{SITE.labName}</span>
+            <p class="text-sm text-gray-500 mt-1">© {new Date().getFullYear()} All rights reserved.</p>
+          </div>
+          
+          <nav class="flex flex-wrap justify-center gap-x-6 gap-y-2">
+            {SITE.nav.map(item => (
+              <a href={item.link} class="text-sm text-gray-600 hover:text-blue-600 transition-colors">
+                {item.text}
+              </a>
+            ))}
+          </nav>
+        </div>
+        <div class="mt-8 pt-8 border-t border-gray-200 text-center">
+           <p class="text-xs text-gray-400">
+             Last updated: {new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
+           </p>
+        </div>
       </div>
     </footer>
+    )}
+    
 
+    
+    <script>
+      // Initialize interactive elements on every page load (View Transitions compatible)
+      document.addEventListener('astro:page-load', () => {
+        
+        // Back to Top Logic
+        const backToTopBtn = document.getElementById('back-to-top');
+        if (backToTopBtn) {
+          const toggleBackToTop = () => {
+            if (window.scrollY > 300) {
+              backToTopBtn.classList.add('visible');
+            } else {
+              backToTopBtn.classList.remove('visible');
+            }
+          };
+
+          window.addEventListener('scroll', toggleBackToTop);
+          backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        }
+
+        // Copy Button Logic
+        document.querySelectorAll('.copy-btn').forEach(btn => {
+          btn.addEventListener('click', async () => {
+            const text = btn.getAttribute('data-copy');
+            if (text) {
+              try {
+                await navigator.clipboard.writeText(text);
+                btn.classList.add('copied');
+                setTimeout(() => btn.classList.remove('copied'), 2000);
+              } catch (err) {
+                console.error('Failed to copy', err);
+              }
+            }
+          });
+        });
+
+      });
+    </script>
+    
     <script is:inline define:vars={{ ui, defaultLang }}>
       // Make ui available globally for debugging if needed, but main logic is here
       const translations = ui;

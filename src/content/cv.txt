@@ -1,0 +1,185 @@
+Rik U. Lubbers 
+UMCG Global Health Unit, University Medical Center Groningen 
+Faculty of Spatial Sciences, University of Groningen Groningen, The Netherlands r.u.lubbers@rug.nl 
+/ 
+r.u.lubbers@umcg.nl 
+| 
++31 
+6 
+346 
+268 
+94 
+linkedin.com/in/rik-lubbers 
+
+Profile 
+
+PhD Candidate in Global Health and Spatial Sciences, studying maternal and child health impacts of extreme weather events (floods, droughts, and compound events) in Uganda. I integrate geospatial accessibility modelling (AccessMod) with pooled Demographic and Health Survey (DHS) analyses to quantify pathways from climate shocks to care seeking and undernutrition. My work spans quantitative and qualitative methods in collaboration with partners in Uganda and Switzerland. 
+
+Academic positions 
+University Medical Center Groningen 2023 to present 
+PhD Candidate Groningen, The Netherlands 
+• 
+Flood accessibility modelling in Kampala: developed AccessMod-based geospatial accessibility models to estimate flood disruption impacts on access to MNCH-relevant services. 
+
+• 
+Drought and care-seeking pathways: pooled DHS analyses (survey-weighted spline modelling) to quantify drought-related pathways to care seeking for childhood danger signs and undernutrition. 
+
+• 
+Qualitative fieldwork: designing and conducting interviews in Katakwi District on resilience, flood/drought exposure, and healthcare access. 
+
+
+
+Ministry of Health Uganda and UNFPA Nov–Dec 2024 
+Invited Facilitator Kampala, Uganda 
+• Provided national-level technical support on GIS-based accessibility modelling (AccessMod) to strengthen EmONC service network optimisation across Uganda. 
+
+Erasmus School of Health Policy and Management 2021 to 2022 
+Research Assistant Rotterdam, The Netherlands 
+• Curated a structured evidence database on substandard and falsified medicines, with reproducible data extraction. 
+
+Erasmus School of Health Policy and Management 2021 
+Research Intern Rotterdam, The Netherlands 
+• Contributed to the conceptual development of a sub-national pharmaceutical system framework for essential-medicines access. 
+
+Vrije Universiteit Amsterdam 2020 to 2021 
+Student Assistant, Statistics Amsterdam, The Netherlands 
+• Taught applied statistics in small groups for pre-master health sciences students. 
+Publications 
+
+Peer-reviewed articles (Published) 
+1. 
+Lubbers, R. U., Waiswa-Goossens, T., Weitkamp, G., Biesma, R. Geographical accessibility to public healthcare facilities and undernutrition in children under-five in Uganda: a cross-sectional spatial analysis. African Geographical Review, 2025. 10.1080/19376812.2025.2538772 
+
+
+2. 
+Kok, M. O., Biljers Fanda, R., Lubbers, R. U., van Gurp, M., Ravinetto, R., Probandari, A. Assessing the performance of local pharmaceutical systems: an analytical approach to improve access to medicine. The Journal of Medicine Access, 2025. 
+10.1177/27550834251371502 
+
+
+
+
+Submitted manuscripts 
+• Lubbers, R. U. Shifting Perspectives to Address Epistemic Injustices in Global Health: The Role of Early-Career Researchers from the Global North. Under review at Global Health Promotion. 
+
+Preprints (Under review) 
+• 
+Lubbers, R. U., Weitkamp, G., Hierink, F., Ray, N., Oporia, F., Businge, O., Biesma-Blanco, 
+
+R. Geospatial modelling reveals flood-driven inequities in nutrition-sensitive healthcare access across Kampala, Uganda. Preprint, 2025. Submitted to Nature Communications Medicine. 10.21203/rs.3.rs-8055572/v1 
+
+
+• 
+Kasagga, B., Nagawa, A., Harrison, J., Elobu, E., Curtis, A., Lubbers, R. U., Peace Nsodi, C., Galukande, M., Ozgediz, D., Koch, R., Ray, N. Geospatial modeling of 1-hour and 2-hour access to surgical care in Uganda: a national scale-up analysis. Preprint, 2025. 10.21203/rs.3.rs-7937670/v1 
+
+
+
+
+
+Funding and grants 
+2026 2025 to 2026 2025 to 2026 2025 2022  De Cock-Hadders Foundation, scientific research grant for PhD project Access to Maternal and Child Healthcare during Floods and Droughts in Katakwi District, Uganda, supporting qualitative fieldwork, EUR 4,000. Rudolf Agricola School for Sustainable Development (University of Groningen), Societal Impact Grant, Katakwi Flood and Drought Access, Stakeholder Dissemination, EUR 1,800. Public Engagement Seed Fund (University of Groningen), Co-creating a Climate–Health Research Agenda in Katakwi, EUR 3.100. SSA Partial Travel Grant (Awarded), co-applicant, hosting a two-week visiting scholar from Makerere University School of Public Health (Ronald Wasswa) to Groningen, EUR 1,500. GUIDE (CPE office), travel support, EUR 250.  
+2022 2022  De Cock-Hadders Foundation, scientific internship support for Research Master field internship at Noah’s Ark Family Clinic, Uganda, EUR 500. University Medical Center Groningen, small grant support, EUR 267.50.  
+2022  Groningen University Fund (GUF), personal travel grant for Research Master scientific internship in Mukono, Uganda (Noah’s Ark Family Clinic), EUR 750.  
+Software  
+
+• 
+spatial.align (R package): open-source tools for reproducible raster alignment. Repository: RikLubbers/spatial.align. (Open Research Award certificate; University of Groningen) 
+
+• 
+AMRemote_looped_MLC (tooling fork): batch-enabled AMRemote workflow to run AccessMod replay analyses across merged landcovers for barrier-change scenarios. Repository: RikLubbers/AMRemote_looped_MLC. 
+
+
+
+Research visits 
+Mar–Apr 2024 Visiting researcher, University of Geneva (UNIGE), Institute for Environmental Sciences, GeoHealth group, Geneva, Switzerland. 
+Aug 2025 Visiting researcher, University of Geneva (UNIGE), Institute for Environmental Sciences, GeoHealth group, Geneva, Switzerland. 
+
+Teaching and guest lectures (selected) 
+2026 Guest lecture (MNCH and planetary health), University Medical Center Utrecht. 
+2025 Guest lecture, BSc Geography programme (MNCH and planetary health), University of Groningen.
+2025 Guest lecture, Project-Based Learning, Health Systems and Prevention (public health assignment development), University of Groningen. 
+2025 Guest lecture, Struggle Seminar series (MNCH and planetary health), University of Groningen.
+2025 Invited session speaker, Summer School Global Health (breastfeeding and undernutrition; with Marieke de Sévaux), University Medical Center Groningen (UMCG), Jun 2025. 
+2024 Invited session speaker, Summer School Global Health (breastfeeding and undernutrition; with Marieke de Sévaux), University Medical Center Groningen (UMCG), Jun 2024. 
+2024 Guest lecture, session for bachelor medical students (preparation for Sub-Saharan Africa internships), University of Groningen. 
+2023 Guest lecture, University College Groningen (MNCH and planetary health), University of Groningen. 
+
+Conferences and academic events 
+• 
+MakSPH TRIAD Research Dissemination Seminar (Makerere University School of Public Health, TRIAD Centre), oral research dissemination seminar: Geospatial Modelling of Flood Impacts on Nutrition-Sensitive Healthcare Access in Kampala, Uganda, Kampala, Uganda (MakSPH), 11 Nov 2025. 
+
+• 
+Aletta Jacobs School of Public Health Junior Research Meet-up, oral presentation (keynote): Epistemic inequality in global health, Groningen, 24 Apr 2025. 
+
+• 
+GROW Community Event, attendance (methods workshops), Elspeet, 15–16 May 2025. 
+
+• 
+Urban Transitions 2024, poster presentation, Sitges, Spain, 5–8 Nov 2024. 
+
+• 
+3rd Annual Online Health Geography Symposium (AHGS), oral presentation, online, 10 Dec 2024. 
+
+• 
+World Public Health Nutrition Congress, attendance, 2024. 
+
+• 
+ECTMIH 2023 (European Congress on Tropical Medicine and International Health), poster presentation, Utrecht, The Netherlands, 20–23 Nov 2023. 
+
+
+
+Doctoral training and professional development (selected) 
+Methods 
+• 
+Structural Equation Modeling in R using lavaan, e-learning course (online; Utrecht University), 2–27 Mar 2025. 
+
+• 
+Data management and FAIR data workshops, University of Groningen, 2023 to 2024. 
+
+
+Summer schools 
+• 
+A degrowth trajectory towards living with Earth through a Planetary Health lens, Summer School (University of Groningen), 2024. 
+
+• 
+ECTMIH Academy, Utrecht University (Utrecht Summer School), Utrecht, The Netherlands, 19 Nov 2023. 
+
+
+
+
+Education 
+University of Groningen 2021 to 2023 
+MSc, Clinical and Psychosocial Epidemiology, track Health Systems and Prevention Groningen, The Netherlands 
+Vrije Universiteit Amsterdam 2019 to 2021 
+MSc, Health Sciences, track International Public Health Amsterdam, The Netherlands 
+Hanze University of Applied Sciences Groningen 2015 to 2019 
+BSc (Honours), Nursing Groningen, The Netherlands 
+
+
+Languages 
+• 
+Dutch (native) 
+
+• 
+English (proficient) 
+
+• 
+German, French, Spanish, Portuguese (limited working proficiency) 
+
+
+
+Academic service and leadership 
+• 
+Board member, The Rob Foundation Nederland, 2026 to present. 
+
+• 
+Member, SSA Research and Impact Commission, 2024 to Present. 
+
+• 
+Committee member, SSA PhD Network, 2023 to Present. 
+
+• 
+Member, Sustainability Sounding Board, University of Groningen, 2023 to 2024. 
+
+
+
+

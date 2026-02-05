@@ -1,0 +1,145 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const grants = (await getCollection('grants')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+// Calculate Summary Statistics
+const totalAmount = grants.reduce((sum, grant) => {
+  const amountStr = grant.data.amount.replace(/[^0-9.]/g, '');
+  return sum + (parseFloat(amountStr) || 0);
+}, 0);
+
+const years = grants.map(g => g.data.date.getFullYear());
+const yearRange = years.length > 0 ? `${Math.min(...years)}–${Math.max(...years)}` : '';
+const count = grants.length;
+
+// Format total amount (assuming EUR)
+const formattedTotal = new Intl.NumberFormat('en-IE', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(totalAmount);
+---
+
+<Layout title="Funding & Grants">
+  <div class="max-w-4xl mx-auto px-4 py-16 sm:px-6 lg:px-8">
+    <div class="mb-10">
+      <h1 class="text-4xl font-bold text-gray-900 mb-6">Grants</h1>
+      
+      <div class="intro-box">
+        <p class="text-lg text-gray-700 font-medium">
+          Competitive research and impact grants supporting my work on climate, health, and healthcare accessibility.
+        </p>
+      </div>
+
+      <!-- Summary Stats -->
+      <div class="grid grid-cols-3 gap-4 mb-8 p-6 bg-gray-50 rounded-2xl border border-gray-100">
+        <div class="text-center border-r border-gray-200 last:border-0">
+          <div class="text-3xl font-bold text-gray-900">{formattedTotal}</div>
+          <div class="text-xs font-semibold text-gray-500 uppercase tracking-widest mt-1">Total Sec.</div>
+        </div>
+        <div class="text-center border-r border-gray-200 last:border-0">
+          <div class="text-3xl font-bold text-gray-900">{count}</div>
+          <div class="text-xs font-semibold text-gray-500 uppercase tracking-widest mt-1">Grants</div>
+        </div>
+        <div class="text-center">
+          <div class="text-3xl font-bold text-gray-900">{yearRange}</div>
+          <div class="text-xs font-semibold text-gray-500 uppercase tracking-widest mt-1">Timeline</div>
+        </div>
+      </div>
+
+      <!-- Filters -->
+      <div class="flex flex-wrap gap-2" id="grant-filters">
+        <button class="filter-btn active px-4 py-2 rounded-full text-sm font-medium bg-gray-900 text-white transition-all hover:bg-gray-800" data-filter="All">
+          All
+        </button>
+        <button class="filter-btn px-4 py-2 rounded-full text-sm font-medium bg-gray-100 text-gray-600 hover:bg-gray-200 transition-all border border-gray-200" data-filter="Research">
+          Research
+        </button>
+        <button class="filter-btn px-4 py-2 rounded-full text-sm font-medium bg-gray-100 text-gray-600 hover:bg-gray-200 transition-all border border-gray-200" data-filter="Impact">
+          Impact
+        </button>
+        <button class="filter-btn px-4 py-2 rounded-full text-sm font-medium bg-gray-100 text-gray-600 hover:bg-gray-200 transition-all border border-gray-200" data-filter="Travel">
+          Travel
+        </button>
+      </div>
+    </div>
+
+    <!-- Grant List -->
+    <div class="space-y-6">
+      {grants.map(grant => (
+        <div class="card-refined p-6 group relative" data-category={grant.data.category || 'Research'}>
+          <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+            <div class="flex-grow">
+               <div class="flex items-center gap-2 mb-2">
+                 <h2 class="text-xl font-bold text-gray-900 leading-tight group-hover:text-blue-600 transition-colors">
+                    {grant.data.title}
+                 </h2>
+                 <span class="px-2 py-0.5 rounded-full bg-gray-50 text-gray-500 text-[10px] font-bold uppercase tracking-wider border border-gray-200">
+                    {grant.data.category || 'Research'}
+                 </span>
+               </div>
+               
+               <div class="text-blue-700 font-medium mb-2">
+                 {grant.data.funderUrl ? (
+                   <a href={grant.data.funderUrl} target="_blank" class="hover:underline flex items-center gap-1">
+                     {grant.data.funder}
+                     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="opacity-50"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                   </a>
+                 ) : (
+                   grant.data.funder
+                 )}
+               </div>
+
+               {/* Role Logic: Hide if Recipient & Main Applicant */}
+               {grant.data.role && grant.data.role !== 'Recipient & Main Applicant' && (
+                 <div class="text-sm text-gray-500 mb-1">
+                   <strong class="text-gray-700">Role:</strong> {grant.data.role}
+                 </div>
+               )}
+               
+               {grant.data.purpose && (
+                 <div class="text-sm text-gray-600 italic leading-relaxed border-l-2 border-gray-100 pl-3 mt-2">
+                   {grant.data.purpose}
+                 </div>
+               )}
+            </div>
+            
+            <div class="flex flex-row md:flex-col justify-between md:items-end shrink-0 md:text-right gap-1 md:gap-0 pt-1">
+               <span class="text-lg font-bold text-emerald-600 tabular-nums">{grant.data.amount}</span>
+               <span class="text-gray-400 text-sm font-medium">{grant.data.year}</span>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('astro:page-load', () => {
+      const filters = document.querySelectorAll('.filter-btn');
+      const cards = document.querySelectorAll('.card-refined[data-category]');
+
+      filters.forEach(btn => {
+        btn.addEventListener('click', () => {
+          // Active State
+          filters.forEach(f => {
+             f.classList.remove('bg-gray-900', 'text-white');
+             f.classList.add('bg-gray-100', 'text-gray-600');
+          });
+          btn.classList.remove('bg-gray-100', 'text-gray-600');
+          btn.classList.add('bg-gray-900', 'text-white');
+
+          const filterValue = btn.getAttribute('data-filter');
+
+          // Filter Logic
+          cards.forEach(card => {
+             const category = card.getAttribute('data-category');
+             if (filterValue === 'All' || category === filterValue) {
+               card.style.display = 'block';
+             } else {
+               card.style.display = 'none';
+             }
+          });
+        });
+      });
+    });
+  </script>
+</Layout>

@@ -6,11 +6,15 @@ import react from '@astrojs/react';
 
 // https://astro.build/config
 export default defineConfig({
+  site: "https://riklubbers.github.io",   // ← ADD THIS LINE
+
   compressHTML: true,
+
   build: {
     inlineStylesheets: 'always',
-    assetsInlineLimit: 10240, // 10KB to inline achievements.css (7.5KB)
+    assetsInlineLimit: 10240,
   },
+
   vite: {
     plugins: [tailwindcss()],
     build: {

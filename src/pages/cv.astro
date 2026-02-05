@@ -1,0 +1,264 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import { SITE } from '../config';
+import avatarReal from '../assets/avatar-real.jpg';
+import ExternalLink from '../components/ExternalLink.astro';
+
+const positions = (await getCollection('positions')).sort((a, b) => b.data.startDate.valueOf() - a.data.startDate.valueOf());
+const education = (await getCollection('education')).sort((a, b) => b.data.startDate.valueOf() - a.data.startDate.valueOf());
+const visits = (await getCollection('visits')).sort((a, b) => b.data.startDate.valueOf() - a.data.startDate.valueOf());
+const service = (await getCollection('service')).sort((a, b) => b.data.startDate.valueOf() - a.data.startDate.valueOf());
+const training = (await getCollection('training')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+---
+
+<Layout title="CV">
+  <div class="max-w-4xl mx-auto px-4 py-16 sm:px-6 lg:px-8">
+    <!-- Header -->
+    <header class="mb-16">
+      <div class="flex flex-col md:flex-row justify-between items-start gap-8 mb-8">
+          <div class="flex flex-col sm:flex-row gap-6 items-start max-w-3xl">
+            <!-- Profile Image -->
+            <div class="shrink-0">
+               <Image 
+                 src={avatarReal} 
+                 alt={SITE.author}
+                 class="w-32 h-32 md:w-40 md:h-40 rounded-full object-cover border-4 border-white shadow-md ring-1 ring-gray-100"
+               />
+            </div>
+            
+            <div>
+              <h1 class="text-4xl sm:text-5xl font-extrabold text-gray-900 mb-2 tracking-tight">{SITE.author}</h1>
+              <div class="text-xl text-gray-500 font-medium mb-4">
+                <div>PhD Candidate — Global Health & Spatial Sciences</div>
+                <div class="text-lg font-normal text-gray-400">Climate shocks, healthcare accessibility, maternal and child health, Uganda</div>
+              </div>
+              
+              <div class="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-gray-600 font-medium">
+                <span class="flex items-center gap-2">
+                  📍 {SITE.university}
+                </span>
+                <span class="flex items-center gap-2">
+                    ✉️ 
+                    <div class="inline-flex items-center gap-1">
+                       <a href={`mailto:${SITE.email}`} class="hover:text-blue-600 transition-colors">{SITE.email}</a>
+                       <button class="copy-btn text-gray-400 hover:text-gray-600 transition-colors ml-1 p-1" data-copy={SITE.email} aria-label="Copy email">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                          <span class="copy-tooltip">Copied!</span>
+                       </button>
+                    </div>
+                </span>
+                <span class="flex items-center gap-2">
+                  🔗 <ExternalLink href="https://linkedin.com/in/rik-lubbers" class="hover:text-blue-600 transition-colors">linkedin.com/in/rik-lubbers</ExternalLink>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <a href="/cv.pdf" target="_blank" class="inline-flex items-center gap-2 px-6 py-3 bg-gray-900 hover:bg-gray-800 text-white font-semibold rounded-lg shadow-sm hover:shadow-md transition-all shrink-0">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download CV
+          </a>
+      </div>
+    </header>
+
+    <!-- Sections -->
+    <div class="grid lg:grid-cols-[180px_1fr] gap-12 items-start">
+      
+      <!-- Sticky Sidebar -->
+      <aside class="hidden lg:block sticky top-24">
+        <nav class="space-y-4">
+          <a href="#positions" class="toc-link block text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors p-2 rounded-r-md border-l-2 border-transparent">Positions</a>
+          <a href="#education" class="toc-link block text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors p-2 rounded-r-md border-l-2 border-transparent">Education</a>
+          <a href="#visits" class="toc-link block text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors p-2 rounded-r-md border-l-2 border-transparent">Visits</a>
+          <a href="#training" class="toc-link block text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors p-2 rounded-r-md border-l-2 border-transparent">Training</a>
+          <a href="#service" class="toc-link block text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors p-2 rounded-r-md border-l-2 border-transparent">Leadership</a>
+          <a href="#languages" class="toc-link block text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors p-2 rounded-r-md border-l-2 border-transparent">Languages</a>
+        </nav>
+      </aside>
+
+      <div class="space-y-16 alternate-sections min-w-0">
+        
+        <!-- Academic Positions -->
+        <section id="positions" class="scroll-mt-24" data-toc-section>
+          <h2 class="section-header">Academic Positions</h2>
+          <div class="space-y-8 timeline-list">
+            {positions.map(pos => (
+              <div class="grid sm:grid-cols-[120px_1fr] gap-6 timeline-item">
+                <div class="text-sm pt-1">
+                   <div class="font-bold text-gray-900 tabular-nums">
+                      {pos.data.startDate.getFullYear()} – {pos.data.current ? 'Present' : pos.data.endDate?.getFullYear()}
+                   </div>
+                   <div class="text-gray-400 text-xs font-medium uppercase tracking-wide mt-1">{pos.data.location}</div>
+                </div>
+                <div>
+                  <h3 class="font-bold text-gray-900 text-lg leading-tight mb-1">{pos.data.institution}</h3>
+                  <div class="text-gray-700 font-medium mb-3 flex items-center gap-2">
+                    {pos.data.role}
+                    {(pos.data.current || pos.data.role.includes('PhD')) && (
+                      <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-blue-50 text-blue-700 border border-blue-100">Current</span>
+                    )}
+                  </div>
+                  {pos.data.description && (
+                    <ul class="list-disc list-outside ml-4 space-y-1.5 text-gray-600 text-[15px] leading-relaxed marker:text-gray-300">
+                      {pos.data.description.map(item => (
+                        <li>{item}</li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+  
+        <!-- Education -->
+        <section id="education" class="scroll-mt-24" data-toc-section>
+          <h2 class="section-header">Education</h2>
+          <div class="space-y-6">
+            {education.map(edu => (
+               <div class="grid sm:grid-cols-[120px_1fr] gap-6">
+                 <div class="text-sm font-bold text-gray-900 tabular-nums pt-0.5">
+                    {edu.data.startDate.getFullYear()} – {edu.data.endDate.getFullYear()}
+                 </div>
+                 <div>
+                    <h3 class="font-bold text-gray-900 text-lg">{edu.data.degree}</h3>
+                    <div class="text-gray-700 font-medium">{edu.data.institution}</div>
+                    <div class="text-gray-500 text-sm mt-1">{edu.data.location}</div>
+                 </div>
+               </div>
+            ))}
+          </div>
+        </section>
+  
+        <!-- Research Visits -->
+        <section id="visits" class="scroll-mt-24" data-toc-section>
+          <h2 class="section-header">Research Visits</h2>
+          <div class="space-y-6">
+            <div class="grid sm:grid-cols-[120px_1fr] gap-6">
+               <div class="text-sm font-bold text-gray-900 tabular-nums space-y-1 pt-0.5">
+                 <div>Aug 2025</div>
+                 <div>Mar–Apr 2024</div>
+               </div>
+               <div>
+                  <h3 class="font-bold text-gray-900 text-lg">University of Geneva (UNIGE)</h3>
+                  <div class="text-gray-700 font-medium">Visiting Researcher — GeoHealth group</div>
+                  <div class="text-gray-500 text-sm mt-1">Geneva, Switzerland</div>
+               </div>
+            </div>
+          </div>
+        </section>
+  
+        <!-- Doctoral Training -->
+        <section id="training" class="scroll-mt-24" data-toc-section>
+          <h2 class="section-header">Doctoral Training & PD</h2>
+          
+          <details class="group bg-gray-50 rounded-xl overflow-hidden border border-gray-100">
+            <summary class="flex justify-between items-center p-6 cursor-pointer hover:bg-gray-100 transition-colors">
+               <div class="font-medium text-gray-900">Show Detailed Coursework & Training</div>
+               <span class="text-gray-400 group-open:rotate-180 transition-transform">
+                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+               </span>
+            </summary>
+            <div class="p-6 pt-0 grid sm:grid-cols-2 gap-8 border-t border-gray-200 mt-2">
+              {['Methods', 'SummerSchool', 'Professional', 'Other'].map(type => {
+                 const items = training.filter(t => t.data.type === type);
+                 if (items.length === 0) return null;
+                 return (
+                   <div>
+                     <h3 class="font-bold text-gray-900 mb-3 text-sm uppercase tracking-wider">{type.replace('SummerSchool', 'Summer Schools')}</h3>
+                     <ul class="space-y-2.5 text-sm">
+                       {items.map(item => (
+                         <li class="flex flex-col">
+                           <span class="text-gray-800 font-medium">{item.data.title}</span>
+                           <span class="text-gray-500 text-xs">{item.data.institution} <span class="text-gray-300 mx-1">|</span> {item.data.dateString || item.data.date.getFullYear()}</span>
+                         </li>
+                       ))}
+                     </ul>
+                   </div>
+                 )
+              })}
+            </div>
+          </details>
+        </section>
+  
+        <!-- Academic Service -->
+        <section id="service" class="section-header-container scroll-mt-24" data-toc-section>
+          <h2 class="section-header">Academic Leadership</h2>
+          <ul class="space-y-5 timeline-list">
+            {service.map(srv => (
+               <li class="grid sm:grid-cols-[120px_1fr] gap-6 timeline-item">
+                  <div class="text-sm font-bold text-gray-900 tabular-nums pt-0.5">
+                     {srv.data.startDate.getFullYear()} – {srv.data.current ? 'Present' : srv.data.endDate?.getFullYear()}
+                  </div>
+                  <div>
+                     <span class="font-bold text-gray-900 block">{srv.data.organization}</span>
+                     <div class="text-gray-700">{srv.data.role}</div>
+                  </div>
+               </li>
+            ))}
+          </ul>
+        </section>
+  
+         <!-- Languages -->
+         <section id="languages" class="scroll-mt-24" data-toc-section>
+          <h2 class="section-header">Languages</h2>
+          <div class="flex flex-wrap gap-3 text-sm">
+             <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-200 text-gray-700">
+               <span class="font-bold text-gray-900">Dutch</span> Native
+             </span>
+             <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-200 text-gray-700">
+               <span class="font-bold text-gray-900">English</span> Proficient
+             </span>
+             <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-200 text-gray-700">
+               <span class="font-bold text-gray-900">Other</span> Working knowledge
+               <span class="pl-1 text-gray-500 border-l border-gray-300 ml-1 text-xs">German, French, Spanish, Portuguese</span>
+             </span>
+          </div>
+        </section>
+  
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  // Scroll Spy Logic
+  document.addEventListener('astro:page-load', () => {
+    const sections = document.querySelectorAll('[data-toc-section]');
+    const links = document.querySelectorAll('.toc-link');
+
+    if (sections.length > 0 && links.length > 0) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const id = entry.target.getAttribute('id');
+            // Remove active from all
+            links.forEach(link => {
+               link.classList.remove('toc-active');
+               link.removeAttribute('aria-current');
+            });
+            // Add active to current
+            const activeLink = document.querySelector(`.toc-link[href="#${id}"]`);
+            if (activeLink) {
+              activeLink.classList.add('toc-active');
+              activeLink.setAttribute('aria-current', 'true');
+              
+              // Update URL hash without scroll (debounced)
+              if (history.replaceState) {
+                 history.replaceState(null, null, `#${id}`);
+              }
+            }
+          }
+        });
+      }, {
+        rootMargin: "-20% 0px -60% 0px", // Key to centering the trigger zone
+        threshold: 0
+      });
+
+      sections.forEach(section => observer.observe(section));
+    }
+  });
+</script>

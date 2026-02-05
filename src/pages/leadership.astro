@@ -1,0 +1,121 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+import ExternalLink from '../components/ExternalLink.astro';
+
+const service = (await getCollection('service')).sort((a, b) => b.data.startDate.valueOf() - a.data.startDate.valueOf());
+---
+
+<Layout title="Academic Leadership">
+  <div class="max-w-4xl mx-auto px-4 py-16 sm:px-6 lg:px-8">
+    <h1 class="text-4xl font-bold text-gray-900 mb-8">Academic Leadership</h1>
+    <div class="space-y-12">
+      {/* 1. External / Foundation Governance */}
+      <section>
+        <h2 class="section-header">External / Foundation Governance</h2>
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+            <div class="divide-y divide-gray-100">
+                {service.filter(s => !s.data.organization.includes('University') && !s.data.organization.includes('SSA')).map(srv => (
+                    <div class="p-6 hover:bg-gray-50 transition-colors relative group">
+                        {/* Vertical Accent */}
+                        <div class="absolute left-0 top-0 bottom-0 w-1 bg-blue-600 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        
+                        <div class="flex flex-col md:flex-row md:justify-between gap-4">
+                            <div class="space-y-2">
+                                <div class="flex items-center gap-3 flex-wrap">
+                                    <h3 class="font-bold text-lg text-gray-900 leading-tight">{srv.data.role}</h3>
+                                    {/* Type Badge */}
+                                    <span class={`px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider border ${
+                                        srv.data.type === 'board' ? 'bg-indigo-50 text-indigo-700 border-indigo-200' :
+                                        srv.data.type === 'advisory' ? 'bg-emerald-50 text-emerald-700 border-emerald-200' :
+                                        'bg-gray-100 text-gray-600 border-gray-200'
+                                    }`}>
+                                      {srv.data.type}
+                                    </span>
+                                </div>
+                                
+                                <div>
+                                    <div class="text-blue-700 font-medium flex items-center gap-2">
+                                        {srv.data.organization}
+                                        <span class="px-1.5 py-0.5 rounded bg-gray-100 text-gray-500 text-[10px] font-medium border border-gray-200">
+                                            Foundation
+                                        </span>
+                                    </div>
+                                    
+                                    {/* Description */}
+                                    {srv.data.description && (
+                                        <p class="text-gray-600 text-sm mt-1">{srv.data.description}</p>
+                                    )}
+
+                                    {srv.data.organization === "The Rob Foundation Nederland" && (
+                                      <div class="mt-2">
+                                        <ExternalLink href="https://therobfoundation.nl/" class="px-2.5 py-1 bg-white text-blue-600 text-xs font-medium rounded-md hover:bg-blue-50 border border-blue-100 transition-colors shadow-sm group">
+                                          Visit Website
+                                        </ExternalLink>
+                                      </div>
+                                    )}
+                                </div>
+                            </div>
+                            
+                            <div class="shrink-0 text-gray-500 font-medium whitespace-nowrap text-sm md:text-right pt-0.5">
+                                {srv.data.startDate.getFullYear()} – {srv.data.current ? 'Present' : srv.data.endDate?.getFullYear()}
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+      </section>
+
+      {/* 2. University Governance */}
+      <section>
+        <h2 class="section-header">University Governance</h2>
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+            <div class="divide-y divide-gray-100">
+                {service.filter(s => s.data.organization.includes('University') || s.data.organization.includes('SSA')).map(srv => (
+                    <div class="p-6 hover:bg-gray-50 transition-colors relative group">
+                        {/* Vertical Accent */}
+                        <div class="absolute left-0 top-0 bottom-0 w-1 bg-red-600 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        
+                        <div class="flex flex-col md:flex-row md:justify-between gap-4">
+                            <div class="space-y-2">
+                                <div class="flex items-center gap-3 flex-wrap">
+                                    <h3 class="font-bold text-lg text-gray-900 leading-tight">{srv.data.role}</h3>
+                                    {/* Type Badge */}
+                                    <span class={`px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider border ${
+                                        srv.data.type === 'commission' ? 'bg-purple-50 text-purple-700 border-purple-200' :
+                                        srv.data.type === 'committee' ? 'bg-orange-50 text-orange-700 border-orange-200' :
+                                        srv.data.type === 'advisory' ? 'bg-amber-50 text-amber-700 border-amber-200' :
+                                        'bg-gray-100 text-gray-600 border-gray-200'
+                                    }`}>
+                                      {srv.data.type}
+                                    </span>
+                                </div>
+                                
+                                <div>
+                                    <div class="text-gray-800 font-medium flex items-center gap-2">
+                                        {srv.data.organization}
+                                        <span class="px-1.5 py-0.5 rounded bg-gray-100 text-gray-500 text-[10px] font-medium border border-gray-200">
+                                            University of Groningen
+                                        </span>
+                                    </div>
+                                    
+                                    {/* Description */}
+                                    {srv.data.description && (
+                                        <p class="text-gray-600 text-sm mt-1">{srv.data.description}</p>
+                                    )}
+                                </div>
+                            </div>
+                            
+                            <div class="shrink-0 text-gray-500 font-medium whitespace-nowrap text-sm md:text-right pt-0.5">
+                                {srv.data.startDate.getFullYear()} – {srv.data.current ? 'Present' : srv.data.endDate?.getFullYear()}
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</Layout>

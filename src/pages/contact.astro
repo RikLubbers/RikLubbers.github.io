@@ -1,0 +1,157 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { SITE } from '../config';
+import { Mail, Linkedin, MapPin } from 'lucide-react';
+import ExternalLink from '../components/ExternalLink.astro';
+---
+
+<Layout title="Contact">
+  <div class="max-w-3xl mx-auto px-4 py-16 sm:px-6 lg:px-8">
+    <div class="text-center mb-10">
+      <h1 class="text-4xl font-bold text-gray-900 mb-4">Contact</h1>
+      <p class="text-lg text-gray-600 font-medium">
+        Available for research collaboration, invited talks, and academic partnerships.
+      </p>
+    </div>
+    
+    <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-8 md:p-12">
+        <div class="space-y-10">
+            {/* Email Block */}
+            <div class="flex items-start gap-5">
+                <div class="bg-blue-50 p-3 rounded-full shrink-0 mt-1">
+                    <Mail className="w-6 h-6 text-blue-600" />
+                </div>
+                <div class="flex-grow">
+                    <h3 class="text-lg font-bold text-gray-900 mb-1">Email</h3>
+                    <div class="flex items-center gap-3 mb-1">
+                        <a href={`mailto:${SITE.email}`} class="text-xl text-blue-600 hover:text-blue-800 font-medium break-all">{SITE.email}</a>
+                        <button class="copy-btn p-1.5 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-md transition-colors" data-clipboard-text={SITE.email} aria-label="Copy Email">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                        </button>
+                    </div>
+                    <div class="text-gray-500 text-sm">r.u.lubbers@umcg.nl</div>
+                </div>
+            </div>
+
+            {/* LinkedIn Block */}
+            <div class="flex items-start gap-5">
+                <div class="bg-blue-50 p-3 rounded-full shrink-0 mt-1">
+                    <Linkedin className="w-6 h-6 text-blue-600" />
+                </div>
+                <div class="flex-grow">
+                    <h3 class="text-lg font-bold text-gray-900 mb-1">LinkedIn</h3>
+                    <div class="flex items-center gap-3">
+                        <ExternalLink href="https://linkedin.com/in/rik-lubbers" class="text-xl text-blue-600 hover:text-blue-800 font-medium break-all">linkedin.com/in/rik-lubbers</ExternalLink>
+                        <button class="copy-btn p-1.5 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-md transition-colors" data-clipboard-text="https://linkedin.com/in/rik-lubbers" aria-label="Copy LinkedIn URL">
+                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            {/* ORCID Block */}
+            <div class="flex items-start gap-5">
+                <div class="bg-green-50 p-3 rounded-full shrink-0 mt-1">
+                    <svg width="24" height="24" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg" fill="none" class="w-6 h-6">
+                      <path d="M256 128c0 70.7-57.3 128-128 128S0 198.7 0 128 57.3 0 128 0s128 57.3 128 128z" fill="#A6CE39"/>
+                      <path d="M86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7C191.7 111.2 178 93 148 93h-23.7v79.4zM71.3 54.8c0-5.2 4.2-9.4 9.4-9.4s9.4 4.2 9.4 9.4c0 5.2-4.2 9.4-9.4 9.4s-9.4-4.2-9.4-9.4z" fill="#fff"/>
+                    </svg>
+                </div>
+                <div class="flex-grow">
+                    <h3 class="text-lg font-bold text-gray-900 mb-1">ORCID</h3>
+                    <div class="flex items-center gap-3">
+                        <ExternalLink href="https://orcid.org/0000-0002-2772-1524" class="text-xl text-blue-600 hover:text-blue-800 font-medium break-all">0000-0002-2772-1524</ExternalLink>
+                        <button class="copy-btn p-1.5 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-md transition-colors" data-clipboard-text="https://orcid.org/0000-0002-2772-1524" aria-label="Copy ORCID URL">
+                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            {/* Location Block */}
+            <div class="flex items-start gap-5">
+                <div class="bg-blue-50 p-3 rounded-full shrink-0 mt-1">
+                    <MapPin className="w-6 h-6 text-blue-600" />
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-1">Location</h3>
+                    <p class="text-gray-700 leading-relaxed">
+                        {SITE.labName}<br/>
+                        {SITE.university}<br/>
+                        Faculty of Spatial Sciences<br/>
+                        Groningen, The Netherlands
+                    </p>
+                </div>
+            </div>
+            
+            {/* Phone Block */}
+            <div class="flex items-start gap-5">
+                <div class="bg-blue-50 p-3 rounded-full shrink-0 mt-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 text-blue-600"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-1">Phone</h3>
+                    <div id="phone-container">
+                        <button id="show-phone-btn" class="text-blue-600 font-medium hover:underline text-lg focus:outline-none">
+                            Show phone number
+                        </button>
+                        <a id="phone-link" href="tel:+31634626894" class="hidden text-xl text-gray-800 font-medium hover:text-blue-600">
+                           +31 6 346 268 94
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+             {/* Optional Fields (rendered if present in SITE config) */}
+             {SITE.socials?.find(s => s.name === "GitHub") && (
+                <div class="flex items-start gap-5">
+                    <div class="bg-gray-100 p-3 rounded-full shrink-0 mt-1">
+                        <Github className="w-6 h-6 text-gray-700" />
+                    </div>
+                     <div>
+                        <h3 class="text-lg font-bold text-gray-900 mb-1">GitHub</h3>
+                        <a href={SITE.socials.find(s => s.name === "GitHub").link} target="_blank" class="text-xl text-blue-600 hover:underline">
+                            View Profile
+                        </a>
+                    </div>
+                </div>
+             )}
+
+        </div>
+    </div>
+  </div>
+  
+  <div id="copy-toast" class="fixed bottom-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white px-4 py-2 rounded-full text-sm font-medium opacity-0 transition-opacity pointer-events-none shadow-lg">
+    Copied to clipboard
+  </div>
+
+  <script is:inline>
+    // Phone Toggle
+    const phoneBtn = document.getElementById('show-phone-btn');
+    const phoneLink = document.getElementById('phone-link');
+    
+    if(phoneBtn && phoneLink) {
+        phoneBtn.addEventListener('click', () => {
+            phoneBtn.classList.add('hidden');
+            phoneLink.classList.remove('hidden');
+        });
+    }
+
+    // Copy to Clipboard
+    const copyBtns = document.querySelectorAll('.copy-btn');
+    const toast = document.getElementById('copy-toast');
+
+    copyBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const text = btn.getAttribute('data-clipboard-text');
+            navigator.clipboard.writeText(text).then(() => {
+                // Show toast
+                toast.classList.remove('opacity-0');
+                setTimeout(() => {
+                    toast.classList.add('opacity-0');
+                }, 2000);
+            });
+        });
+    });
+  </script>
+</Layout>

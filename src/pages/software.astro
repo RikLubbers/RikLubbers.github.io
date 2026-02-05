@@ -1,0 +1,76 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+import { Github, Code } from 'lucide-react';
+import ExternalLink from '../components/ExternalLink.astro';
+
+const softwares = (await getCollection('softwares')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<Layout title="Software">
+  <div class="max-w-4xl mx-auto px-4 py-16 sm:px-6 lg:px-8">
+    <h1 class="text-4xl font-bold text-gray-900 mb-8">Software</h1>
+    <div class="grid gap-6 md:grid-cols-2">
+      {softwares.map(soft => (
+        <div class="card-refined flex flex-col h-full group overflow-hidden">
+            <div class="p-6 flex flex-col flex-grow">
+               <div class="flex items-start justify-between gap-4 mb-3">
+                  <div class="flex items-center gap-2.5">
+                    <div class="p-2 bg-blue-50 text-blue-600 rounded-lg">
+                       <Code className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <h2 class="text-xl font-bold text-gray-900 leading-tight group-hover:text-blue-700 transition-colors">{soft.data.title}</h2>
+                      {soft.data.type && (
+                        <span class="inline-block mt-1 px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-gray-100 text-gray-600 border border-gray-200">
+                          {soft.data.type}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                  {/* Stack Chips */}
+                  {soft.data.stack && (
+                    <div class="flex flex-wrap justify-end gap-1.5 max-w-[40%]">
+                      {soft.data.stack.map(tech => (
+                        <span class="px-2 py-0.5 rounded-md text-[10px] font-medium bg-gray-50 text-gray-500 border border-gray-100">
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+               </div>
+
+               {/* Research Context */}
+               {soft.data.context && (
+                 <div class="mb-4 text-sm font-medium text-blue-800 bg-blue-50/50 px-3 py-2 rounded-md border border-blue-100/50">
+                    research context: <span class="font-normal text-blue-900">{soft.data.context}</span>
+                 </div>
+               )}
+
+               <p class="text-gray-600 mb-6 flex-grow leading-relaxed">{soft.data.description}</p>
+               
+               <div class="mt-auto pt-4 border-t border-gray-50 flex items-center justify-between gap-4">
+                  <div class="flex flex-wrap gap-3">
+                     {soft.data.links?.github && (
+                       <ExternalLink href={soft.data.links.github} class="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors group" showIcon={false}>
+                          <Github className="w-4 h-4" /> GitHub
+                       </ExternalLink>
+                     )}
+                     {!soft.data.links && soft.data.link && (
+                       <ExternalLink href={soft.data.link} class="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors group" showIcon={false}>
+                          <Github className="w-4 h-4" /> Code
+                       </ExternalLink>
+                     )}
+                  </div>
+                  
+
+               </div>
+            </div>
+            
+
+        </div>
+      ))}
+    </div>
+  </div>
+
+</Layout>
