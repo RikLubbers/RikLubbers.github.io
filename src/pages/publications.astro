@@ -3,7 +3,38 @@ import Layout from '../layouts/Layout.astro';
 import PublicationItem from '../components/PublicationItem.astro';
 import { getCollection } from 'astro:content';
 
-const allPapers = (await getCollection('publications')).sort((a, b) => b.data.year - a.data.year);
+const derivedStatus = (entry: any) => { // Using any to access legacy/untyped fields if necessary
+  const t = (entry.data.type || '').toLowerCase();
+  const v = (entry.data.venue || '').toLowerCase();
+  const n = (entry.data.note || '').toLowerCase(); // Fallback for legacy notes
+
+  if (v.includes('under review') || n.includes('under review')) return 'Under Review';
+  if (v.includes('submitted') || n.includes('submitted')) return 'Submitted';
+  if (t === 'preprint' || v.includes('preprint') || n.includes('preprint')) return 'Preprint';
+  if (v.includes('in press') || n.includes('in press')) return 'In press';
+  
+  return 'Published';
+};
+
+const statusPriority: Record<string, number> = {
+  'Under Review': 0,
+  'Submitted': 1,
+  'Preprint': 2,
+  'In press': 3,
+  'Published': 4
+};
+
+const allPapers = (await getCollection('publications')).sort((a, b) => {
+  // 1. Sort by Year (Descending)
+  const timeDiff = b.data.year - a.data.year;
+  if (timeDiff !== 0) return timeDiff;
+
+  // 2. Sort by Status Priority (Ascending order of importance index)
+  const statusA = derivedStatus(a);
+  const statusB = derivedStatus(b);
+  
+  return (statusPriority[statusA] ?? 99) - (statusPriority[statusB] ?? 99);
+});
 const years = [...new Set(allPapers.map(p => p.data.year))];
 ---
 
