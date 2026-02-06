@@ -1,17 +1,17 @@
-// @ts-check
-import { defineConfig } from 'astro/config';
+import { defineConfig } from "astro/config";
 
-import tailwindcss from '@tailwindcss/vite';
-import react from '@astrojs/react';
+import tailwindcss from "@tailwindcss/vite";
+import react from "@astrojs/react";
+import sitemap from "@astrojs/sitemap";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://riklubbers.github.io",   // ← ADD THIS LINE
+  site: "https://riklubbers.com",
 
   compressHTML: true,
 
   build: {
-    inlineStylesheets: 'always',
+    inlineStylesheets: "always",
     assetsInlineLimit: 10240,
   },
 
@@ -19,8 +19,8 @@ export default defineConfig({
     plugins: [tailwindcss()],
     build: {
       assetsInlineLimit: 10240,
-    }
+    },
   },
 
-  integrations: [react()]
+  integrations: [react(), sitemap()],
 });

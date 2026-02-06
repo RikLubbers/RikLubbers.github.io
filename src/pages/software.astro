@@ -7,70 +7,140 @@ import ExternalLink from '../components/ExternalLink.astro';
 const softwares = (await getCollection('softwares')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
 
-<Layout title="Software">
+<Layout title="Software & Data">
   <div class="max-w-4xl mx-auto px-4 py-16 sm:px-6 lg:px-8">
-    <h1 class="text-4xl font-bold text-gray-900 mb-8">Software</h1>
-    <div class="grid gap-6 md:grid-cols-2">
-      {softwares.map(soft => (
-        <div class="card-refined flex flex-col h-full group overflow-hidden">
-            <div class="p-6 flex flex-col flex-grow">
-               <div class="flex items-start justify-between gap-4 mb-3">
-                  <div class="flex items-center gap-2.5">
-                    <div class="p-2 bg-blue-50 text-blue-600 rounded-lg">
-                       <Code className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <h2 class="text-xl font-bold text-gray-900 leading-tight group-hover:text-blue-700 transition-colors">{soft.data.title}</h2>
-                      {soft.data.type && (
-                        <span class="inline-block mt-1 px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-gray-100 text-gray-600 border border-gray-200">
-                          {soft.data.type}
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                  {/* Stack Chips */}
-                  {soft.data.stack && (
-                    <div class="flex flex-wrap justify-end gap-1.5 max-w-[40%]">
-                      {soft.data.stack.map(tech => (
-                        <span class="px-2 py-0.5 rounded-md text-[10px] font-medium bg-gray-50 text-gray-500 border border-gray-100">
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                  )}
-               </div>
-
-               {/* Research Context */}
-               {soft.data.context && (
-                 <div class="mb-4 text-sm font-medium text-blue-800 bg-blue-50/50 px-3 py-2 rounded-md border border-blue-100/50">
-                    research context: <span class="font-normal text-blue-900">{soft.data.context}</span>
-                 </div>
-               )}
-
-               <p class="text-gray-600 mb-6 flex-grow leading-relaxed">{soft.data.description}</p>
-               
-               <div class="mt-auto pt-4 border-t border-gray-50 flex items-center justify-between gap-4">
-                  <div class="flex flex-wrap gap-3">
-                     {soft.data.links?.github && (
-                       <ExternalLink href={soft.data.links.github} class="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors group" showIcon={false}>
-                          <Github className="w-4 h-4" /> GitHub
-                       </ExternalLink>
-                     )}
-                     {!soft.data.links && soft.data.link && (
-                       <ExternalLink href={soft.data.link} class="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors group" showIcon={false}>
-                          <Github className="w-4 h-4" /> Code
-                       </ExternalLink>
-                     )}
-                  </div>
-                  
-
-               </div>
-            </div>
-            
-
-        </div>
-      ))}
+    <div class="mb-12">
+      <h1 class="text-4xl font-bold text-gray-900 mb-4">Software & Data</h1>
+      <p class="text-lg text-gray-600">
+        Research code, open-source tools, and reproducible datasets.
+      </p>
     </div>
+
+    <!-- Software Section -->
+    <section class="mb-16">
+      <div class="flex items-center justify-between mb-8">
+         <h2 class="text-2xl font-bold text-gray-900">Software</h2>
+         <ExternalLink href="https://github.com/RikLubbers/" class="text-sm font-medium text-blue-600 hover:text-blue-800 flex items-center gap-1.5" showIcon={false}>
+            <Github className="w-4 h-4" /> View GitHub Profile
+         </ExternalLink>
+      </div>
+      
+      <p class="text-gray-600 mb-8 max-w-2xl">
+        I develop open-source tools and analysis pipelines for spatial health research. Below are selected packages and repositories.
+      </p>
+
+      <div class="grid gap-6 md:grid-cols-2">
+        {softwares.map(soft => (
+          <div class="card-refined flex flex-col h-full group overflow-hidden">
+              <div class="p-6 flex flex-col flex-grow">
+                 <div class="flex items-start justify-between gap-4 mb-3">
+                    <div class="flex items-center gap-2.5">
+                      <div class="p-2 bg-blue-50 text-blue-600 rounded-lg">
+                         <Code className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <h3 class="text-xl font-bold text-gray-900 leading-tight group-hover:text-blue-700 transition-colors">{soft.data.title}</h3>
+                        {soft.data.type && (
+                          <span class="inline-block mt-1 px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-gray-100 text-gray-600 border border-gray-200">
+                            {soft.data.type}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    {/* Stack Chips */}
+                    {soft.data.stack && (
+                      <div class="flex flex-wrap justify-end gap-1.5 max-w-[40%]">
+                        {soft.data.stack.map(tech => (
+                          <span class="px-2 py-0.5 rounded-md text-[10px] font-medium bg-gray-50 text-gray-500 border border-gray-100">
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                 </div>
+  
+                 {/* Research Context */}
+                 {soft.data.context && (
+                   <div class="mb-4 text-sm font-medium text-blue-800 bg-blue-50/50 px-3 py-2 rounded-md border border-blue-100/50">
+                      research context: <span class="font-normal text-blue-900">{soft.data.context}</span>
+                   </div>
+                 )}
+  
+                 <p class="text-gray-600 mb-6 flex-grow leading-relaxed">{soft.data.description}</p>
+                 
+                 <div class="mt-auto pt-4 border-t border-gray-50 flex items-center justify-between gap-4">
+                    <div class="flex flex-wrap gap-3">
+                       {soft.data.links?.github && (
+                         <ExternalLink href={soft.data.links.github} class="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors group" showIcon={false}>
+                            <Github className="w-4 h-4" /> GitHub
+                         </ExternalLink>
+                       )}
+                       {!soft.data.links && soft.data.link && (
+                         <ExternalLink href={soft.data.link} class="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors group" showIcon={false}>
+                            <Github className="w-4 h-4" /> Code
+                         </ExternalLink>
+                       )}
+                    </div>
+                 </div>
+              </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Data Section -->
+    <section>
+      <div class="flex items-center justify-between mb-8">
+         <h2 class="text-2xl font-bold text-gray-900">Data</h2>
+         <ExternalLink href="https://zenodo.org" class="text-sm font-medium text-blue-600 hover:text-blue-800 flex items-center gap-1.5" showIcon={false}>
+             View Zenodo Profile
+         </ExternalLink>
+      </div>
+
+      <p class="text-gray-600 mb-8 max-w-2xl">
+        Published datasets, reusable figures, and supplemental materials for my research.
+      </p>
+
+      <div class="grid gap-6 md:grid-cols-1">
+        <!-- New Data Card -->
+        <div class="card-refined flex flex-col h-full group overflow-hidden border border-gray-100 bg-white rounded-2xl shadow-sm hover:shadow-md transition-shadow">
+           <div class="p-6">
+              <div class="flex items-start justify-between gap-4 mb-4">
+                 <div class="flex items-start gap-4">
+                   <div class="p-2 bg-green-50 text-green-700 rounded-lg shrink-0">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+                   </div>
+                   <div>
+                     <h3 class="text-lg font-bold text-gray-900 leading-tight mb-2">
+                       Travel Time to Nearest Public Healthcare Facility from UHDS-2016 Household Clusters
+                     </h3>
+                     <div class="flex flex-wrap gap-2 text-xs">
+                        <span class="px-2 py-0.5 rounded bg-gray-100 text-gray-600 font-medium border border-gray-200 uppercase tracking-wide">
+                          Dataset
+                        </span>
+                        <span class="px-2 py-0.5 rounded bg-blue-50 text-blue-700 font-medium border border-blue-100">
+                          2025
+                        </span>
+                     </div>
+                   </div>
+                 </div>
+              </div>
+
+              <p class="text-gray-600 mb-6 leading-relaxed">
+                This dataset contains information on the travel time to the nearest public healthcare facility for households surveyed in the Uganda Demographic and Health Survey (UDHS) 2016. It highlights healthcare accessibility disparities across regions in Uganda.
+              </p>
+
+              <div class="flex items-center gap-4 pt-4 border-t border-gray-50">
+                 <ExternalLink href="https://doi.org/10.5281/zenodo.11240433" class="text-sm font-medium text-blue-600 hover:text-blue-800 hover:underline">
+                    Access on Zenodo
+                 </ExternalLink>
+                 <span class="text-gray-300">|</span>
+                 <span class="text-xs text-gray-500 font-mono">DOI: 10.5281/zenodo.11240433</span>
+              </div>
+           </div>
+        </div>
+      </div>
+    </section>
   </div>
 
 </Layout>

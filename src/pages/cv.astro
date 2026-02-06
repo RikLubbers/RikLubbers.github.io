@@ -6,7 +6,11 @@ import { SITE } from '../config';
 import avatarReal from '../assets/avatar-real.jpg';
 import ExternalLink from '../components/ExternalLink.astro';
 
-const positions = (await getCollection('positions')).sort((a, b) => b.data.startDate.valueOf() - a.data.startDate.valueOf());
+const positions = (await getCollection('positions')).sort((a, b) => {
+  if (a.data.current && !b.data.current) return -1;
+  if (!a.data.current && b.data.current) return 1;
+  return b.data.startDate.valueOf() - a.data.startDate.valueOf();
+});
 const education = (await getCollection('education')).sort((a, b) => b.data.startDate.valueOf() - a.data.startDate.valueOf());
 const visits = (await getCollection('visits')).sort((a, b) => b.data.startDate.valueOf() - a.data.startDate.valueOf());
 const service = (await getCollection('service')).sort((a, b) => b.data.startDate.valueOf() - a.data.startDate.valueOf());
@@ -18,8 +22,8 @@ const training = (await getCollection('training')).sort((a, b) => b.data.date.va
   <div class="max-w-4xl mx-auto px-4 py-16 sm:px-6 lg:px-8">
     <!-- Header -->
     <header class="mb-16">
-      <div class="flex flex-col md:flex-row justify-between items-start gap-8 mb-8">
-          <div class="flex flex-col sm:flex-row gap-6 items-start max-w-3xl">
+      <div class="flex flex-col md:flex-row justify-between items-center gap-8 mb-8">
+          <div class="flex flex-col md:flex-row gap-6 items-center max-w-3xl">
             <!-- Profile Image -->
             <div class="shrink-0">
                <Image 
@@ -30,30 +34,7 @@ const training = (await getCollection('training')).sort((a, b) => b.data.date.va
             </div>
             
             <div>
-              <h1 class="text-4xl sm:text-5xl font-extrabold text-gray-900 mb-2 tracking-tight">{SITE.author}</h1>
-              <div class="text-xl text-gray-500 font-medium mb-4">
-                <div>PhD Candidate — Global Health & Spatial Sciences</div>
-                <div class="text-lg font-normal text-gray-400">Climate shocks, healthcare accessibility, maternal and child health, Uganda</div>
-              </div>
-              
-              <div class="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-gray-600 font-medium">
-                <span class="flex items-center gap-2">
-                  📍 {SITE.university}
-                </span>
-                <span class="flex items-center gap-2">
-                    ✉️ 
-                    <div class="inline-flex items-center gap-1">
-                       <a href={`mailto:${SITE.email}`} class="hover:text-blue-600 transition-colors">{SITE.email}</a>
-                       <button class="copy-btn text-gray-400 hover:text-gray-600 transition-colors ml-1 p-1" data-copy={SITE.email} aria-label="Copy email">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
-                          <span class="copy-tooltip">Copied!</span>
-                       </button>
-                    </div>
-                </span>
-                <span class="flex items-center gap-2">
-                  🔗 <ExternalLink href="https://linkedin.com/in/rik-lubbers" class="hover:text-blue-600 transition-colors">linkedin.com/in/rik-lubbers</ExternalLink>
-                </span>
-              </div>
+              <h1 class="text-center md:text-left text-4xl sm:text-5xl font-extrabold text-gray-900 tracking-tight">{SITE.author}</h1>
             </div>
           </div>
 

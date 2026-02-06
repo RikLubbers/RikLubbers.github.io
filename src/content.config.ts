@@ -19,6 +19,7 @@ const publications = defineCollection({
       demo: z.string().optional(),
       slides: z.string().optional(),
       video: z.string().optional(),
+      data: z.string().optional(),
     }).optional(),
     featured: z.boolean().default(false),
     badges: z.array(z.object({
@@ -244,6 +245,24 @@ const service = defineCollection({
   }),
 });
 
+const gallery = defineCollection({
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/gallery" }),
+  schema: z.object({
+    title: z.string(),
+    year: z.number().int(),
+    location: z.string(),
+    category: z.enum(['fieldwork', 'workshops', 'teaching', 'talks', 'collaborations', 'personal', 'other']),
+    image: z.string().refine((val) => val.startsWith('/gallery/'), {
+      message: "Image path must start with '/gallery/'",
+    }),
+    alt: z.string().min(1),
+    width: z.number().int().positive(),
+    height: z.number().int().positive(),
+    tags: z.array(z.string()).optional(),
+    credit: z.string().optional(),
+  }),
+});
+
 export const collections = {
   publications,
   softwares,
@@ -254,4 +273,5 @@ export const collections = {
   teaching,
   training,
   service,
+  gallery,
 };

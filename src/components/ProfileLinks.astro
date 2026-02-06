@@ -1,0 +1,59 @@
+---
+const links = [
+  {
+    name: "Google Scholar",
+    url: "https://scholar.google.com/citations?user=zUEKD84AAAAJ&hl=nl&oi=ao",
+  },
+  {
+    name: "ORCID",
+    url: "https://orcid.org/0000-0002-2772-1524",
+  },
+  {
+    name: "University Profile",
+    url: "https://research.rug.nl/en/persons/rik-lubbers/",
+  },
+  {
+    name: "GitHub",
+    url: "https://github.com/RikLubbers/",
+  },
+  {
+    name: "ResearchGate",
+    url: "https://www.researchgate.net/profile/Rik-Lubbers",
+  },
+  {
+    name: "Zenodo",
+    url: "https://zenodo.org", // TODO: Update with specific profile URL when available
+  },
+];
+
+interface Props {
+  class?: string;
+  itemClass?: string;
+  exclude?: string[];
+}
+
+const { class: className, itemClass, exclude = [] } = Astro.props;
+
+const visibleLinks = links.filter(link => !exclude.includes(link.name));
+---
+
+<ul class:list={["flex flex-wrap gap-4", className]}>
+  {
+    visibleLinks.map((link) => (
+      <li>
+        <a
+          href={link.url}
+          target="_blank"
+          rel="me noopener noreferrer"
+          class:list={[
+            "text-sm font-medium transition-colors hover:underline underline-offset-4",
+            itemClass
+          ]}
+          aria-label={`${link.name} (opens in new tab)`}
+        >
+          {link.name}
+        </a>
+      </li>
+    ))
+  }
+</ul>

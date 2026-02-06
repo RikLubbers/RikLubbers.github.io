@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import { SITE } from '../config';
 import { Mail, Linkedin, MapPin } from 'lucide-react';
 import ExternalLink from '../components/ExternalLink.astro';
+import ProfileLinks from '../components/ProfileLinks.astro';
 ---
 
 <Layout title="Contact">
@@ -12,6 +13,15 @@ import ExternalLink from '../components/ExternalLink.astro';
       <p class="text-lg text-gray-600 font-medium">
         Available for research collaboration, invited talks, and academic partnerships.
       </p>
+      
+      <div class="mt-8 flex flex-col items-center">
+        <h2 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4">Find me online</h2>
+        <ProfileLinks 
+          class="justify-center" 
+          itemClass="text-gray-600 hover:text-blue-600" 
+          exclude={["ORCID", "LinkedIn"]}
+        />
+      </div>
     </div>
     
     <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-8 md:p-12">
@@ -125,33 +135,49 @@ import ExternalLink from '../components/ExternalLink.astro';
     Copied to clipboard
   </div>
 
-  <script is:inline>
-    // Phone Toggle
-    const phoneBtn = document.getElementById('show-phone-btn');
-    const phoneLink = document.getElementById('phone-link');
-    
-    if(phoneBtn && phoneLink) {
-        phoneBtn.addEventListener('click', () => {
-            phoneBtn.classList.add('hidden');
-            phoneLink.classList.remove('hidden');
-        });
+  <script>
+    function initPhone() {
+        // Phone Toggle
+        const phoneBtn = document.getElementById('show-phone-btn');
+        const phoneLink = document.getElementById('phone-link');
+        
+        if(phoneBtn && phoneLink && !phoneBtn.dataset.init) {
+            phoneBtn.addEventListener('click', () => {
+                phoneBtn.classList.add('hidden');
+                phoneLink.classList.remove('hidden');
+            });
+            phoneBtn.dataset.init = 'true';
+        }
+
+        // Copy to Clipboard
+        const copyBtns = document.querySelectorAll('.copy-btn');
+        const toast = document.getElementById('copy-toast');
+
+        if (toast) {
+            copyBtns.forEach(btn => {
+                if (btn.dataset.init === 'true') return;
+                
+                btn.addEventListener('click', () => {
+                    const text = btn.getAttribute('data-clipboard-text');
+                    if (text) {
+                        navigator.clipboard.writeText(text).then(() => {
+                            // Show toast
+                            toast.classList.remove('opacity-0');
+                            setTimeout(() => {
+                                toast.classList.add('opacity-0');
+                            }, 2000);
+                        });
+                    }
+                });
+                btn.dataset.init = 'true';
+            });
+        }
     }
 
-    // Copy to Clipboard
-    const copyBtns = document.querySelectorAll('.copy-btn');
-    const toast = document.getElementById('copy-toast');
-
-    copyBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const text = btn.getAttribute('data-clipboard-text');
-            navigator.clipboard.writeText(text).then(() => {
-                // Show toast
-                toast.classList.remove('opacity-0');
-                setTimeout(() => {
-                    toast.classList.add('opacity-0');
-                }, 2000);
-            });
-        });
-    });
+    // Run immediately for initial load (if events already fired)
+    initPhone();
+    
+    // Run on view transitions navigation
+    document.addEventListener('astro:page-load', initPhone);
   </script>
 </Layout>

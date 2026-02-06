@@ -1,0 +1,235 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const gallery = (await getCollection('gallery')).sort(
+  (a, b) => {
+    // Sort by Year descending, then Title ascending
+    if (b.data.year !== a.data.year) {
+      return b.data.year - a.data.year;
+    }
+    return a.data.title.localeCompare(b.data.title);
+  }
+);
+---
+
+<Layout 
+  title="Gallery"
+  description="Selected moments from fieldwork, workshops, teaching, and collaborations."
+>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="mb-10 text-center md:text-left">
+      <h1 class="text-4xl font-bold text-gray-900 mb-4 tracking-tight">Gallery</h1>
+      <p class="text-xl text-gray-600 max-w-3xl mx-auto md:mx-0">
+        Selected moments from fieldwork, workshops, teaching, and collaborations.
+      </p>
+    </div>
+
+    {/* Gallery Grid */}
+    {/* Using columns logic for masonry feel, but ensuring buttons are accessible */}
+    <div 
+      class="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6" 
+      id="gallery-grid"
+      role="region"
+      aria-label="Photo gallery"
+    >
+      {gallery.map((item, index) => (
+        <button
+          type="button"
+          class="gallery-item w-full break-inside-avoid relative group cursor-pointer text-left focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-500 rounded-xl"
+          data-id={item.id}
+          data-category={item.data.category || 'Other'}
+          data-index={index}
+          aria-label={`View full size: ${item.data.title}`}
+        >
+          <div class="bg-white rounded-xl overflow-hidden shadow-sm border border-slate-200 transition-all duration-300 group-hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] group-hover:-translate-y-1">
+            <div class="relative overflow-hidden bg-gray-100">
+               <img 
+                src={item.data.image} 
+                alt={item.data.alt}
+                width={item.data.width || 800}
+                height={item.data.height || 600}
+                class="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                loading={index < 2 ? "eager" : "lazy"}
+                decoding="async"
+              />
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-300"></div>
+            </div>
+            
+            <div class="p-5">
+              <h3 class="font-bold text-gray-900 text-lg leading-tight mb-1">{item.data.title}</h3>
+              <p class="text-sm text-gray-500 font-medium">
+                <span class="text-blue-600/80 capitalize">{item.data.category}</span>
+                <span class="mx-1.5 text-gray-300">•</span>
+                {item.data.year}
+                {item.data.location && <span class="mx-1.5 text-gray-300">•</span>}
+                {item.data.location}
+              </p>
+            </div>
+          </div>
+        </button>
+      ))}
+    </div>
+
+    {/* Lightbox Modal */}
+    <dialog 
+      id="lightbox" 
+      class="bg-transparent p-0 w-full h-full max-w-none max-h-none m-0 z-50 focus:outline-none backdrop:bg-black/95 backdrop:backdrop-blur-sm"
+      aria-modal="true"
+    >
+      <div class="w-full h-full flex flex-col items-center justify-center relative select-none">
+        {/* Controls */}
+        <button 
+          id="lb-close"
+          class="absolute top-4 right-4 md:top-6 md:right-8 text-white/70 hover:text-white bg-black/20 hover:bg-white/10 p-2.5 rounded-full transition-colors z-[70] focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
+          aria-label="Close gallery"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+
+        <button 
+          id="lb-prev"
+          class="absolute left-2 md:left-8 top-1/2 -translate-y-1/2 text-white/70 hover:text-white bg-black/20 hover:bg-white/10 p-3 rounded-full transition-colors z-[70] focus:outline-none focus-visible:ring-2 focus-visible:ring-white disabled:opacity-30 disabled:cursor-not-allowed hidden md:block"
+          aria-label="Previous image"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+
+        <button 
+          id="lb-next"
+          class="absolute right-2 md:right-8 top-1/2 -translate-y-1/2 text-white/70 hover:text-white bg-black/20 hover:bg-white/10 p-3 rounded-full transition-colors z-[70] focus:outline-none focus-visible:ring-2 focus-visible:ring-white disabled:opacity-30 disabled:cursor-not-allowed hidden md:block"
+          aria-label="Next image"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+
+        {/* Content */}
+        <div class="flex-1 w-full h-full flex flex-col justify-center p-4 pb-20 md:pb-4" id="lb-content">
+          <img 
+            id="lb-img" 
+            src="" 
+            alt="" 
+            class="max-h-[75vh] md:max-h-[85vh] max-w-full w-auto mx-auto rounded-sm shadow-2xl object-contain opacity-0 transition-opacity duration-300" 
+            draggable="false"
+          />
+          
+          <div class="mt-4 md:absolute md:bottom-8 md:left-0 md:right-0 text-center pointer-events-none">
+            <div class="inline-block bg-black/60 backdrop-blur-md rounded-xl px-6 py-3 max-w-2xl mx-auto pointer-events-auto">
+              <h3 id="lb-title" class="text-white font-bold text-lg"></h3>
+              <p id="lb-meta" class="text-gray-300 text-sm mt-0.5 space-x-2"></p>
+              <p id="lb-loc" class="text-gray-400 text-xs mt-1 italic"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </dialog>
+  </div>
+</Layout>
+
+{/* Pass gallery data to client for hydration-free lightbox (optional, but cleaner logic than parsing DOM) */}
+<script define:vars={{ gallery }}>
+  // Lightbox Logic
+  const dialog = document.getElementById('lightbox');
+  const imgEl = document.getElementById('lb-img');
+  const titleEl = document.getElementById('lb-title');
+  const metaEl = document.getElementById('lb-meta');
+  const locEl = document.getElementById('lb-loc');
+  const prevBtn = document.getElementById('lb-prev');
+  const nextBtn = document.getElementById('lb-next');
+  const closeBtn = document.getElementById('lb-close');
+  const items = document.querySelectorAll('.gallery-item');
+
+  let currentIndex = -1;
+
+  function openLightbox(index) {
+    if (index < 0 || index >= gallery.length) return;
+
+    currentIndex = index;
+    updateLightboxContent(gallery[currentIndex]);
+    dialog.showModal();
+    document.body.style.overflow = 'hidden';
+    
+    // Ensure focus is in dialog
+    closeBtn.focus();
+  }
+
+  function updateLightboxContent(item) {
+    if (!item) return;
+
+    // Fade out
+    imgEl.style.opacity = '0.5';
+    
+    setTimeout(() => {
+      imgEl.src = item.data.image;
+      imgEl.alt = item.data.alt;
+      titleEl.textContent = item.data.title;
+      
+      // Meta: Category • Year
+      const meta = [];
+      if (item.data.category) meta.push(item.data.category.charAt(0).toUpperCase() + item.data.category.slice(1));
+      if (item.data.year) meta.push(item.data.year);
+      metaEl.textContent = meta.join(' • ');
+
+      // Location
+      locEl.textContent = item.data.location || '';
+      
+      // Fade in when loaded
+      imgEl.onload = () => {
+        imgEl.style.opacity = '1';
+      };
+    }, 150);
+  }
+  
+  function nextImage() {
+    currentIndex = (currentIndex + 1) % gallery.length;
+    updateLightboxContent(gallery[currentIndex]);
+  }
+
+  function prevImage() {
+    currentIndex = (currentIndex - 1 + gallery.length) % gallery.length;
+    updateLightboxContent(gallery[currentIndex]);
+  }
+
+  function closeLightbox() {
+    dialog.close();
+    document.body.style.overflow = '';
+    // Return focus to the grid item we just closed
+    const item = gallery[currentIndex];
+    if (item) {
+       document.querySelector(`button[data-id="${item.id}"]`)?.focus();
+    }
+    imgEl.src = '';
+  }
+
+  // Event Listeners
+  items.forEach((item) => {
+    item.addEventListener('click', (e) => {
+      openLightbox(parseInt(item.dataset.index));
+    });
+  });
+
+  closeBtn.addEventListener('click', closeLightbox);
+  prevBtn.addEventListener('click', prevImage);
+  nextBtn.addEventListener('click', nextImage);
+  
+  // Close on backdrop click
+  dialog.addEventListener('click', (e) => {
+    if (e.target === dialog) closeLightbox();
+  });
+
+  // Global Keyboard Nav for Lightbox
+  dialog.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') nextImage();
+    if (e.key === 'ArrowLeft') prevImage();
+    if (e.key === 'Escape') closeLightbox();
+  });
+
+</script>
+
+<style>
+  /* Base styles for dialog backbone */
+  dialog::backdrop {
+    background: rgba(0, 0, 0, 0.9);
+    backdrop-filter: blur(4px);
+  }
+</style>

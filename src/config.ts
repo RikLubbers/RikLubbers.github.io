@@ -33,8 +33,9 @@ export const SITE = {
     { text: "CV", link: "/cv", key: "cv" },
     { text: "Publications", link: "/publications", key: "publications" },
     { text: "Grants", link: "/grants", key: "grants" },
-    { text: "Software", link: "/software", key: "software" },
+    { text: "Software & Data", link: "/software", key: "software" },
     { text: "Academic Leadership", link: "/leadership", key: "leadership" },
+    { text: "Gallery", link: "/gallery", key: "gallery" },
     { text: "Contact", link: "/contact", key: "contact" },
   ],
 

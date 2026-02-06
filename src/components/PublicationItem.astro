@@ -1,5 +1,5 @@
 ---
-import { FileText, Github, Play, MonitorPlay, Video, ExternalLink, Globe, Sparkles, BookOpen, Calendar, Tag } from 'lucide-react';
+import { FileText, Github, Play, MonitorPlay, Video, ExternalLink, Globe, Sparkles, BookOpen, Calendar, Tag, Database } from 'lucide-react';
 import type { CollectionEntry } from 'astro:content';
 
 interface Props {
@@ -17,6 +17,7 @@ const iconMap: Record<string, any> = {
   video: Video,
   website: Globe,
   doi: ExternalLink,
+  data: Database,
 };
 
 // Strict Badge Logic
@@ -56,6 +57,7 @@ const formatLabel = (key: string) => {
   if (key === 'pdf') return 'PDF';
   if (key === 'github') return 'Code';
   if (key === 'website') return 'Project';
+  if (key === 'data') return 'Data';
   return key.charAt(0).toUpperCase() + key.slice(1);
 };
 ---
@@ -83,11 +85,7 @@ const formatLabel = (key: string) => {
         </span>
       )}
       
-      {/* Year */}
-      <span class="inline-flex items-center gap-1.5 font-medium text-gray-600 bg-gray-50 px-2.5 py-0.5 rounded-md border border-gray-200">
-        <Calendar class="w-3.5 h-3.5 text-gray-500" />
-        {year}
-      </span>
+
 
       {/* Status Badge */}
       <span class={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold border ${badgeStyles[statusColor]}`}>

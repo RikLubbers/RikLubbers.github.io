@@ -4,6 +4,7 @@ import {
   Menu, X, Globe, ChevronDown, Check, Moon, Sun,
   Home, BookOpen, Trophy, Users, Calendar, UserPlus, Sparkles, Search
 } from 'lucide-react';
+import { Image } from 'astro:assets';
 
 import { ui, defaultLang, languages } from '../i18n/ui';
 
@@ -28,8 +29,18 @@ const getIcon = (key: string) => iconMap[key] || Sparkles;
     <div class="flex justify-between items-center h-16">
       <!-- Logo & Name -->
       <div class="flex items-center gap-3">
-        <a href="/" class="flex items-center gap-2 group">
-          {LOGO_IMAGE.enable && SITE.logo && <img src={SITE.logo} alt="Logo" class="h-8 w-8 object-contain" />}
+        <a href="/" class="flex items-center gap-2 group outline-none focus:ring-2 focus:ring-blue-600 rounded-lg p-1">
+          {LOGO_IMAGE.enable && SITE.logo && 
+            <Image 
+              src={SITE.logo} 
+              alt="Logo" 
+              class="h-8 w-8 object-contain" 
+              width={32}
+              height={32}
+              loading="eager" 
+              fetchpriority="high"
+            />
+          }
           <div class="flex flex-col leading-tight">
             <span class="font-bold text-gray-900 text-lg leading-tight group-hover:text-blue-600 transition-colors">
               {SITE.labName}
@@ -48,7 +59,7 @@ const getIcon = (key: string) => iconMap[key] || Sparkles;
             return (
               <a 
                 href={item.link} 
-                class="p-2 text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-full transition-colors"
+                class="p-2 text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-full transition-colors outline-none focus:ring-2 focus:ring-blue-600"
                 aria-label={item.text}
               >
                 <Search className="w-5 h-5" />
@@ -62,8 +73,8 @@ const getIcon = (key: string) => iconMap[key] || Sparkles;
               class:list={[
                 "text-sm font-medium transition-colors border-b-2 py-1",
                 isActive 
-                  ? "text-blue-600 border-blue-600" 
-                  : "text-gray-600 border-transparent hover:text-blue-600 hover:border-blue-200"
+                  ? "text-blue-600 border-blue-600 focus-visible:ring-2 focus-visible:ring-blue-600 outline-none rounded-sm" 
+                  : "text-gray-600 border-transparent hover:text-blue-600 hover:border-blue-200 focus-visible:ring-2 focus-visible:ring-blue-600 outline-none rounded-sm"
               ]}
               data-i18n-key={`nav.${item.key}`}
             >
@@ -76,7 +87,7 @@ const getIcon = (key: string) => iconMap[key] || Sparkles;
         {customPages && customPages.map(item => (
            <a 
              href={item.link} 
-            class="text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors"
+            class="text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors outline-none focus:ring-2 focus:ring-blue-600 rounded-sm px-1"
              data-i18n-key={item.key} 
            >
              {item.text}
@@ -117,7 +128,16 @@ const getIcon = (key: string) => iconMap[key] || Sparkles;
     <!-- Header with Close Button -->
     <div class="flex items-center justify-between px-6 h-20 border-b border-gray-100 shrink-0 bg-white">
       <div class="flex items-center gap-3">
-        {LOGO_IMAGE.enable && SITE.logo && <img src={SITE.logo} alt="Logo" class="h-10 w-10 object-contain" />}
+        {LOGO_IMAGE.enable && SITE.logo && 
+          <Image 
+            src={SITE.logo} 
+            alt="Logo" 
+            class="h-10 w-10 object-contain" 
+            width={40}
+            height={40}
+            loading="eager"
+          />
+        }
         <span class="font-bold text-gray-900 text-xl">{SITE.labName}</span>
       </div>
       <button 
@@ -137,7 +157,7 @@ const getIcon = (key: string) => iconMap[key] || Sparkles;
           <a 
             href={item.link} 
             class:list={[
-              "flex items-center justify-between w-full py-4 px-4 text-lg font-medium rounded-xl transition-all border-b border-gray-100 last:border-0",
+              "flex items-center justify-between w-full py-4 px-4 text-lg font-medium rounded-xl transition-all border-b border-gray-100 last:border-0 outline-none focus:ring-2 focus:ring-blue-600 focus:bg-blue-50",
               isActive 
                 ? "text-blue-600 bg-blue-50 border-blue-200" 
                 : "text-gray-800 hover:text-blue-600 hover:bg-gray-50 bg-white"

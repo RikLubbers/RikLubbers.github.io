@@ -1,6 +1,6 @@
 ---
 title: "Shifting Perspectives to Address Epistemic Injustices in Global Health: The Role of Early-Career Researchers from the Global North"
-authors: ["Rik U. Lubbers"]
+authors: ["Rik U. Lubbers", "Charlotte M. Hoffman"]
 year: 2025
 venue: "Global Health Promotion (Under Review)"
 type: "paper"
@@ -15,4 +15,5 @@ links:
 description: "Published in Global Health Promotion (Under Review)."
 featured: false
 ---
+
 Published in Global Health Promotion (Under Review).

@@ -6,8 +6,9 @@ venue: "African Geographical Review"
 type: "paper"
 cover: "../../assets/paper-vision.jpg"
 links:
-  pdf: ""
-  code: ""
+  pdf: "https://www.tandfonline.com/doi/epdf/10.1080/19376812.2025.2538772?needAccess=true"
+  code: "https://github.com/RikLubbers/HealthAccess_NutriU5_UG"
+  data: "https://zenodo.org/records/11240433"
   website: ""
   demo: ""
   slides: ""
@@ -16,4 +17,5 @@ doi: "10.1080/19376812.2025.2538772"
 description: "Published in African Geographical Review."
 featured: true
 ---
+
 Published in African Geographical Review.

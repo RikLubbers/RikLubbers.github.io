@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import Header from '../components/Header.astro';
+import ProfileLinks from '../components/ProfileLinks.astro';
 import { SITE } from '../config';
 import { ui, defaultLang } from '../i18n/ui';
 import { ClientRouter } from 'astro:transitions';
@@ -8,77 +9,90 @@ import { ClientRouter } from 'astro:transitions';
 interface Props {
   title?: string;
   description?: string;
+  image?: string;
+  canonical?: string;
   footer?: boolean;
 }
 
-const { title, description = SITE.description, footer = true } = Astro.props;
-const pageTitle = title ? `${title} | ${SITE.labName}` : `${SITE.labName} - ${SITE.university}`;
+const { 
+  title, 
+  description = "PhD research on climate extremes, floods, droughts, and maternal and child health accessibility using spatial and geospatial modelling in Uganda.",
+  image = "/og-image.png",
+  canonical,
+  footer = true 
+} = Astro.props;
 
-// Define dynamic OG Image
-// If it's the homepage, use index.png. Otherwise, try to map the path to a slug.
-// For simplification, we'll just default to index.png for the home page, and generate specific ones for known routes.
-// However, to be robust, let's assume we have an og image for every page that maps to our static paths in og/[...slug].ts.
-// But standard pages like /research match /og/research.
-// What about nested pages like /research/cv? Our OG generator doesn't handle them yet (it only has static pages list).
-// So we will use a fallback.
-const currentPath = Astro.url.pathname.replace(/^\/|\/$/g, '');
-const ogSlug = currentPath === '' ? 'index' : currentPath;
-// Check if the current path is one of our supported OG pages (index, research, team, publications, news, join).
-// If not, fallback to index.
-const supportedOgPages = ['index', 'research', 'team', 'publications', 'news', 'join'];
-const finalOgSlug = supportedOgPages.includes(ogSlug) ? ogSlug : 'index';
-const ogImage = new URL(`/og/${finalOgSlug}.png`, Astro.url);
+const siteName = "Rik U. Lubbers";
+const defaultTitle = "Rik U. Lubbers — Global Health & Spatial Sciences";
+const titleTemplate = "%s — Rik U. Lubbers";
+
+const pageTitle = title ? titleTemplate.replace('%s', title) : defaultTitle;
+const canonicalURL = canonical 
+  ? new URL(canonical, "https://riklubbers.com") 
+  : new URL(Astro.url.pathname, "https://riklubbers.com");
+
+const socialImage = new URL(image, "https://riklubbers.com");
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={defaultLang}>
   <head>
     <meta charset="UTF-8" />
     <ClientRouter />
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self';" />
-    <meta name="description" content={description} />
-    <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="generator" content={Astro.generator} />
+    
+    <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "adf2b37b28a446c88e7138e64a5f04cc"}'></script><!-- End Cloudflare Web Analytics -->
     
     <title>{pageTitle}</title>
-
-    <!-- Open Graph / Facebook -->
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="robots" content="index,follow" />
+    <link rel="canonical" href={canonicalURL} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    
+    <!-- Open Graph -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content={Astro.url} />
+    <meta property="og:site_name" content={siteName} />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={ogImage} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:image" content={socialImage} />
 
-    <!-- Twitter -->
+    <!-- Twitter Cards -->
     <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content={Astro.url} />
     <meta property="twitter:title" content={pageTitle} />
     <meta property="twitter:description" content={description} />
-    <meta property="twitter:image" content={ogImage} />
+    <meta property="twitter:image" content={socialImage} />
 
-    {
-      Astro.url.pathname === '/' && (
-        <script is:inline type="application/ld+json" set:html={JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "Person",
-          "name": SITE.author,
-          "url": SITE.website,
-          "image": new URL(SITE.avatar || SITE.logo, SITE.website).href,
-          "jobTitle": "Principal Investigator",
-          "worksFor": {
-            "@type": "Organization",
-            "name": SITE.labName,
-            "url": SITE.website
-          },
-          "description": SITE.description
-        })} />
-      )
-    }
+    <!-- Structured Data (JSON-LD) -->
+    <script is:inline type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Rik U. Lubbers",
+      "jobTitle": "PhD Candidate in Global Health and Spatial Sciences",
+      "url": "https://riklubbers.com",
+      "affiliation": [
+        { "@type": "Organization", "name": "University of Groningen" },
+        { "@type": "Organization", "name": "University Medical Center Groningen" }
+      ],
+      "sameAs": [
+        "https://github.com/RikLubbers/",
+        "https://scholar.google.com/citations?user=zUEKD84AAAAJ&hl=nl&oi=ao",
+        "https://orcid.org/0000-0002-2772-1524",
+        "https://research.rug.nl/en/persons/rik-lubbers/",
+        "https://www.researchgate.net/profile/Rik-Lubbers",
+        "https://zenodo.org" // TODO: Update with specific profile URL when available
+      ]
+    })} />
   </head>
   <body class="min-h-screen flex flex-col">
+    <!-- Skip to content link for a11y -->
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 z-[200] px-4 py-2 bg-white text-blue-600 font-bold shadow-lg rounded-lg border border-blue-200 outline-none focus:ring-2 focus:ring-blue-500">
+      Skip to content
+    </a>
     <Header />
-    <main class="flex-grow" data-pagefind-body>
+    <main id="main-content" class="flex-grow" data-pagefind-body>
       <slot />
     </main>
     
@@ -105,10 +119,14 @@ const ogImage = new URL(`/og/${finalOgSlug}.png`, Astro.url);
             ))}
           </nav>
         </div>
-        <div class="mt-8 pt-8 border-t border-gray-200 text-center">
-           <p class="text-xs text-gray-400">
-             Last updated: {new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
-           </p>
+        
+        <div class="mt-8 pt-8 border-t border-gray-200">
+           <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+             <ProfileLinks class="justify-center md:justify-start" itemClass="text-gray-400 hover:text-blue-600 text-xs" />
+             <p class="text-xs text-gray-400">
+               Last updated: {new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
+             </p>
+           </div>
         </div>
       </div>
     </footer>

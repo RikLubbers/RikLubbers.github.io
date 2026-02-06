@@ -1,5 +1,5 @@
 ---
-role: "Committee member"
+role: "Member"
 organization: "SSA PhD Network, University of Groningen"
 startDate: 2023-01-01
 current: true
